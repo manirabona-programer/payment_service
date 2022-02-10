@@ -9,10 +9,10 @@
         public $amount;
 
         public function __construct() {
-            $this->transaction_fees = config('payment.transaction_fees');
-            $this->coupon_rate = config('payment.coupon');
-            $this->discount_rate = config('payment.discount');
-            $this->vat = config('payment.VAT');
+            $this->transaction_fees = config('Payment.transaction_fees');
+            $this->coupon_rate = config('Payment.coupon');
+            $this->discount_rate = config('Payment.discount');
+            $this->vat = config('Payment.VAT');
         }
 
         public function setProductPrice($product_price){
@@ -45,7 +45,7 @@
         }
 
         public function calculateDiscount(){
-            $this->amount -= $this->amount + ($this->amount * $this->discount_rate['value']);
+            $this->amount -= ($this->amount * $this->discount_rate['value']);
             return $this;
         }
     }
