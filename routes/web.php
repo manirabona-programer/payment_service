@@ -13,4 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\PaymentController@ProcessPayment');
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::group(['middleware' => 'is_super_admin'], function () {
+    Route::get('/dashcube',  function () { return view('dashcube'); })->name('dashcube');
+});
+
+Route::group(['middleware' => ['is_admin', 'is_super_admin']], function () {
+    Route::get('/dashboard',  function () { return view('dashboard'); })->name('dashboard');
+    Route::resource('/config', 'App\Http\Controllers\ConfigController');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/products', 'App\Http\Controllers\ProductController');
+});
+
+
+
+require __DIR__.'/auth.php';

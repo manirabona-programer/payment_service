@@ -4,7 +4,7 @@
         public $transaction_fees; // transaction fees (each transaction)
         public $coupon_rate; // coupon rate as 2%
         public $discount_rate; // membership discount rate as 3%
-        public $vat; // the VAT of product price as 18%
+        public $vat;  // the VAT of product price as 18%
         public $product_price; // a given price
         public $amount; // the net amount after all calculation
 
@@ -30,7 +30,6 @@
             if($this->vat){
                 $this->amount += ($this->amount * $this->vat);
             }
-            return $this;
         }
 
         /**
@@ -45,9 +44,10 @@
          * calculate the net ammount of product price
          * where every required fees removed
          */
-        public function calculateNetAmmount(){
+        public function calculateAmount(){
             $this->amount = $this->calculateCoupon($this->product_price);
-            $this->applyTransactionFees()->calculateDiscount();
+            $this->applyTransactionFees();
+            $this->calculateDiscount();
             $this->calculateVAT();
             return $this->amount;
         }
@@ -57,7 +57,6 @@
          */
         public function applyTransactionFees(){
             $this->amount += $this->transaction_fees;
-            return $this;
         }
 
         /**
@@ -65,6 +64,5 @@
          */
         public function calculateDiscount(){
             $this->amount -= ($this->amount * $this->discount_rate['value']);
-            return $this;
         }
     }
