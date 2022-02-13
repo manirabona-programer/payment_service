@@ -13,15 +13,10 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run() {
-        \DB::table('users')->truncate();
-
-        User::create([
-            'id' => 1,
-            'name' => 'Megan K Richson',
-            'email' => 'hseal419@gmail.com',
-            'email_verified_at' => '',
-            'password' => 'NMGH%^OHSB',
-            'remember_token' => ''
+        $this->call([
+            RoleSeeder::class,
+            ConfigSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

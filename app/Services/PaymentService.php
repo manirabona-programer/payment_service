@@ -1,5 +1,7 @@
 <?php
     namespace App\Services;
+    use App\Services\LoyaltyService;
+
     class PaymentService {
         public $transaction_fees; // transaction fees (each transaction)
         public $coupon_rate; // coupon rate as 2%
@@ -7,12 +9,15 @@
         public $vat;  // the VAT of product price as 18%
         public $product_price; // a given price
         public $amount; // the net amount after all calculation
+        public $Loyalty_service;
+        public $points;
 
         public function __construct() {
             $this->transaction_fees = config('Payment.transaction_fees');
             $this->coupon_rate = config('Payment.coupon');
             $this->discount_rate = config('Payment.discount');
             $this->vat = config('Payment.VAT');
+            $this->Loyalty_service = new LoyaltyService();
         }
 
         /**
@@ -30,6 +35,7 @@
             if($this->vat){
                 $this->amount += ($this->amount * $this->vat);
             }
+            return $this;
         }
 
         /**
@@ -49,7 +55,11 @@
             $this->applyTransactionFees();
             $this->calculateDiscount();
             $this->calculateVAT();
-            return $this->amount;
+            $this->points = $this->Loyalty_service->setRequiredScope()
+                           ->setUserPoints($this->product_price)
+                           ->saveUserPoint();
+            $total_point_amount = $this->Loyalty_service->totalLoyaltyAmount($this->points);
+            return ['net_amount' => $this->amount, 'earned_point' => $this->points, 'earned_amount' => $total_point_amount];
         }
 
         /**
@@ -57,6 +67,7 @@
          */
         public function applyTransactionFees(){
             $this->amount += $this->transaction_fees;
+            return $this;
         }
 
         /**
@@ -64,5 +75,6 @@
          */
         public function calculateDiscount(){
             $this->amount -= ($this->amount * $this->discount_rate['value']);
+            return $this;
         }
     }

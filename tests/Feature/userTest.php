@@ -9,35 +9,30 @@ use App\Models\Role;
 use Tests\TestCase;
 
 class userTest extends TestCase {
-    public function test_user_can_access_home_page(){
-        $user = User::factory()->create();
-        $user->roles()->attach(Role::USER);
+    public function setUp(): void {
+        parent::setUp();
+        $this->artisan('db:seed --class=RoleSeeder');
+        $this->user = User::factory()->create();
+        $this->user->roles()->attach(Role::USER);
+    }
 
-        $response = $this->actingAs($user)->get('/');
+    public function test_user_can_access_home_page(){
+        $response = $this->actingAs($this->user)->get('/');
         $response->assertStatus(200);
     }
 
     public function test_user_can_access_products_page(){
-        $user = User::factory()->create();
-        $user->roles()->attach(Role::USER);
-
-        $response = $this->actingAs($user)->get('/products');
+        $response = $this->actingAs($this->user)->get('/products');
         $response->assertStatus(200);
     }
 
     public function test_user_can_not_access_dashboard(){
-        $user = User::factory()->create();
-        $user->roles()->attach(Role::USER);
-
-        $response = $this->actingAs($user)->get('/dashboard');
+        $response = $this->actingAs($this->user)->get('/dashboard');
         $response->assertStatus(403);
     }
 
     public function test_user_can_not_access_dashcube(){
-        $user = User::factory()->create();
-        $user->roles()->attach(Role::USER);
-
-        $response = $this->actingAs($user)->get('/dashcube');
+        $response = $this->actingAs($this->user)->get('/dashcube');
         $response->assertStatus(403);
     }
 }

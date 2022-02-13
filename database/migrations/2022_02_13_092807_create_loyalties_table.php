@@ -4,17 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RoleUser extends Migration {
+class CreateLoyaltiesTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->unsignedInteger('role_id');
+    public function up()
+    {
+        Schema::create('loyalties', function (Blueprint $table) {
+            $table->id();
             $table->unsignedInteger('user_id');
-            $table->primary(['role_id','user_id']);
+            $table->integer('points');
+            $table->timestamps();
         });
     }
 
@@ -23,7 +26,8 @@ class RoleUser extends Migration {
      *
      * @return void
      */
-    public function down(){
-        Schema::dropIfExists('role_user');
+    public function down()
+    {
+        Schema::dropIfExists('loyalties');
     }
 }

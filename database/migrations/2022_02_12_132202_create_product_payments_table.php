@@ -4,17 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Role extends Migration
-{
+class CreateProductPaymentsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up(){
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('product_payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('user_id');
+            $table->string('amount');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ class Role extends Migration
      * @return void
      */
     public function down(){
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('product_payments');
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PaymentController;
+use App\Http\Requests\ProductRequest;
+use App\Models\ProductPayment;
 
 class ProductController extends Controller {
     /**
@@ -11,7 +15,8 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+        $product = Product::all();
+        return view('products.index', compact('product'));
     }
 
     /**
@@ -20,7 +25,7 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('products.create');
     }
 
     /**
@@ -29,8 +34,9 @@ class ProductController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        //
+    public function store(ProductRequest $request, Product $product) {
+        $this->authorize('create', $product);
+        Product::create($request->validated());
     }
 
     /**
@@ -39,8 +45,8 @@ class ProductController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        //
+    public function show(Product $product) {
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -50,7 +56,7 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        return view('products.edit');
     }
 
     /**
@@ -60,8 +66,9 @@ class ProductController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        //
+    public function update(ProductRequest $request, Product $product) {
+        $this->authorize('update', $product);
+        $product->update($request->validated());
     }
 
     /**
@@ -70,7 +77,8 @@ class ProductController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy(Product $product) {
+        $this->authorize('delete', $product);
+        $product->delete();
     }
 }

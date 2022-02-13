@@ -9,23 +9,21 @@ use App\Models\User;
 use App\Models\Role;
 
 class superAdminTest extends TestCase {
-    use RefreshDatabase; 
-    
+    use RefreshDatabase;
+
     public function setUp(): void {
         parent::setUp();
         $this->artisan('db:seed --class=RoleSeeder');
-        $this->super = User::factory()->create();
-        $this->super->roles()->attach(Role::SUPER_ADMIN);
+        $this->super_admin = User::factory()->create();
+        $this->super_admin->roles()->attach(Role::SUPER_ADMIN);
     }
 
     public function test_super_admin_can_access_dashcube(){
-        $response = $this->actingAs($this->super)->get('/dashcube');
+        $response = $this->actingAs($this->super_admin)->get('/dashcube');
         $response->assertStatus(200);
     }
 
     public function test_super_admin_can_assign_role(){
-        $this->withoutExceptionHandling();
-        $role = User::factory()->create();
-        $this->assertTrue(User::all()->count() == 2);
+        $role = $this->actingAs($this->super_admin)->put('/');
     }
 }

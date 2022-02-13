@@ -15,6 +15,6 @@ class Role extends Model{
     public const SUPER_ADMIN = 3;
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongToMany(User::class);
     }
 }

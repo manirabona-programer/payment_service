@@ -30,6 +30,7 @@ class User extends Authenticatable{
     protected $hidden = [
         'password',
         'remember_token',
+        'role'
     ];
 
     /**
@@ -44,6 +45,10 @@ class User extends Authenticatable{
     /** relatioship between user and role */
     public function roles(){
         return $this->belongsToMany(Role::class);
+    }
+
+    public function loyalty(){
+        return $this->belongsTo(Loyalty::class);
     }
 
     /** check is user id belong to admin role id */

@@ -4,8 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductPayment;
 
-class Product extends Model
-{
+class Product extends Model {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'quantity',
+        'price',
+    ];
+
+    public function productPayments(){
+       return $this->belongsToMany(ProductPayment::class);
+    }
 }

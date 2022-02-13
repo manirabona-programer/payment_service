@@ -10,7 +10,7 @@ use App\Models\Role;
 use Tests\TestCase;
 
 class adminTest extends TestCase {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     public function setUp(): void {
         parent::setUp();
@@ -30,7 +30,7 @@ class adminTest extends TestCase {
     }
 
     public function test_admin_can_add_config(){
-        $response = $this->actingAs($this->admin)->post('/config', 
+        $response = $this->actingAs($this->admin)->post('/config',
             ['name'=>'SHS', 'activated' => true, 'value' => 2]
         );
         $response->assertStatus(200);
@@ -43,7 +43,7 @@ class adminTest extends TestCase {
     }
 
     public function test_admin_can_update_config(){
-        $config = Config::factory()->create(['name' => 'BSI', 'activated' => false]);    
+        $config = Config::factory()->create(['name' => 'BSI', 'activated' => false]);
         $this->assertDatabaseHas('configs', ['name' => 'BSI']);
 
         $update = $this->actingAs($this->admin)->put('/config/'.$config->id, ['name' => 'Lock', 'activated' => true, 'value' => '2']);
@@ -52,7 +52,7 @@ class adminTest extends TestCase {
     }
 
     public function test_admin_can_delete_config(){
-        $config = Config::factory()->create();    
+        $config = Config::factory()->create();
         $this->assertTrue(Config::all()->count() == 1);
 
         $delete = $this->actingAs($this->admin)->delete('/config/'.$config->id);
