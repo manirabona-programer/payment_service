@@ -14,9 +14,8 @@ class adminTest extends TestCase {
 
     public function setUp(): void {
         parent::setUp();
-        $this->artisan('db:seed --class=RoleSeeder');
-        $this->admin = User::factory()->create();
-        $this->admin->roles()->attach(Role::ADMIN);
+        $this->artisan('db:seed');
+        $this->admin = User::factory()->create(['role_id' => Role::ADMIN]);
     }
 
     public function test_admin_can_access_dashboard(){

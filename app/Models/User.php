@@ -20,6 +20,9 @@ class User extends Authenticatable{
         'name',
         'email',
         'password',
+        'role_id',
+        'royalty_points',
+        'is_member',
     ];
 
     /**
@@ -43,8 +46,8 @@ class User extends Authenticatable{
     ];
 
     /** relatioship between user and role */
-    public function roles(){
-        return $this->belongsToMany(Role::class);
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 
     public function loyalty(){
@@ -52,12 +55,12 @@ class User extends Authenticatable{
     }
 
     /** check is user id belong to admin role id */
-    public function isAdmin(): Bool {
-      return in_array(Role::ADMIN, $this->roles()->pluck('id')->toArray());
+    public function isAdmin(): Bool{
+        return in_array(auth()->user()->role_id, [Role::ADMIN]);
     }
 
     /** check if user id has super_admin role id */
-    public function isSuperAdmin(): Bool {
-      return in_array(Role::SUPER_ADMIN, $this->roles()->pluck('id')->toArray());
+    public function isSuperAdmin(): Bool{
+        return in_array(auth()->user()->role_id, [Role::SUPER_ADMIN]);
     }
 }

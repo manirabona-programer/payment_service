@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+require __DIR__.'/auth.php';
+
 Route::group(['middleware' => 'is_super_admin'], function () {
     Route::get('/dashcube',  function () { return view('dashcube'); })->name('dashcube');
 });
@@ -29,5 +31,3 @@ Route::group(['middleware' => 'is_admin'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/products', 'App\Http\Controllers\ProductController');
 });
-
-require __DIR__.'/auth.php';

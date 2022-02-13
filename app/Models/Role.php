@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model{
     use HasFactory;
+    
+    protected $fillable = ['name'];
 
     public const USER = 1;
     public const ADMIN = 2;
     public const SUPER_ADMIN = 3;
 
     public function users(){
-        return $this->belongToMany(User::class);
+        return $this->hasMany(User::class);
     }
 }

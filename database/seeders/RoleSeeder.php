@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class RoleSeeder extends Seeder
      * @return void
      */
     public function run() {
-        \DB::table('roles')->truncate();
+        DB::table('roles')->truncate();
 
         Role::create(['id' => 1, 'name' => 'user']);
         Role::create(['id' => 2, 'name' => 'admin']);

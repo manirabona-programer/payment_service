@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class ProductSeeder extends Seeder
      * @return void
      */
     public function run(){
-        \DB::table('products');
+        DB::table('products')->truncate();
 
         Product::create(['id' => 1, 'name' => 'Sand Crows Chips', 'quantity' => '4', 'price' => '6000']);
         Product::create(['id' => 2, 'name' => 'Flipp Pizza', 'quantity' => '4', 'price' => '10000']);

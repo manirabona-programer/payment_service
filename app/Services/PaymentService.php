@@ -1,6 +1,8 @@
 <?php
     namespace App\Services;
-    use App\Services\LoyaltyService;
+
+use App\Models\Config;
+use App\Services\LoyaltyService;
 
     class PaymentService {
         public $transaction_fees; // transaction fees (each transaction)
@@ -13,10 +15,10 @@
         public $points;
 
         public function __construct() {
-            $this->transaction_fees = config('Payment.transaction_fees');
-            $this->coupon_rate = config('Payment.coupon');
-            $this->discount_rate = config('Payment.discount');
-            $this->vat = config('Payment.VAT');
+            $this->transaction_fees = Config::where('name', 'transaction_fees')->pluck('value')->first();
+            $this->coupon_rate = Config::where('name', 'coupon')->pluck('value')->first();
+            $this->discount_rate = Config::where('name', 'discount')->pluck('value')->first();
+            $this->vat = Config::where('name', 'vat')->pluck('value')->first();
             $this->Loyalty_service = new LoyaltyService();
         }
 
@@ -58,7 +60,7 @@
             $this->points = $this->Loyalty_service->setRequiredScope()
                            ->setUserPoints($this->product_price)
                            ->saveUserPoint();
-            $total_point_amount = $this->Loyalty_service->totalLoyaltyAmount($this->points);
+            $total_point_amount = $this->Loyalty_service->totalUserLoyaltyAmount($this->points);
             return ['net_amount' => $this->amount, 'earned_point' => $this->points, 'earned_amount' => $total_point_amount];
         }
 

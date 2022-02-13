@@ -14,8 +14,4 @@ class Product extends Model {
         'quantity',
         'price',
     ];
-
-    public function productPayments(){
-       return $this->belongsToMany(ProductPayment::class);
-    }
 }

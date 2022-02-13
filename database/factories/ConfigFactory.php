@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ConfigFactory extends Factory {
     /**
@@ -12,9 +13,9 @@ class ConfigFactory extends Factory {
      */
     public function definition(){
         return [
-            'name' => $this->faker->name(),
-            'activated' => true,
-            'value' => '3'
+            'name' => Str::random(10),
+            'activated' => false,
+            'value' => 3.9
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Config;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ConfigSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class ConfigSeeder extends Seeder
      * @return void
      */
     public function run() {
-        \DB::table('configs')->truncate();
+        DB::table('configs')->truncate();
 
         Config::create(['id' => 1, 'name' => 'vat', 'activated' => true, 'value'=>'18 / 100']);
         Config::create(['id' => 2, 'name' => 'discount', 'activated' => true, 'value'=>'2 / 100']);
