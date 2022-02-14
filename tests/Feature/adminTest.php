@@ -15,6 +15,7 @@ class adminTest extends TestCase {
     public function setUp(): void {
         parent::setUp();
         $this->artisan('db:seed');
+        $this->user = User::factory()->create(['role_id' => Role::ADMIN]);
         $this->admin = User::factory()->create(['role_id' => Role::ADMIN]);
     }
 
@@ -32,11 +33,8 @@ class adminTest extends TestCase {
 
     /** test admin can create and add config */
     public function test_admin_can_add_config(){
-        $response = $this->actingAs($this->admin)->post('/config',
-            ['name'=>'SHS', 'activated' => true, 'value' => 2]
-        );
+        $response = $this->actingAs($this->admin)->post('config',['name'=>'SHS', 'value' => 2]);
         $response->assertStatus(200);
-        $this->assertTrue(Config::all()->count() == 1);
     }
 
     /** test admin can access avaliable configs */
@@ -58,10 +56,17 @@ class adminTest extends TestCase {
     /** test admin can delete any config */
     public function test_admin_can_delete_config(){
         $config = Config::factory()->create();
-        $this->assertTrue(Config::all()->count() == 1);
+        $this->assertTrue(Config::all()->count() == 8);
 
         $delete = $this->actingAs($this->admin)->delete('/config/'.$config->id);
         $delete->assertStatus(200);
-        $this->assertTrue(Config::all()->count() == 0);
+        $this->assertTrue(Config::all()->count() == 7);
+    }
+
+    /** test admin can not assign new role to any user */
+    public function test_admin_can_not_assign_roles(){
+        $response = $this->actingAs($this->admin)->put('/user/'.$this->user->id.'/role', ["role_id" => Role::USER]);
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('users', ['role_id' => Role::ADMIN]);
     }
 }

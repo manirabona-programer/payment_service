@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ require __DIR__.'/auth.php';
 /** SUPER ADMIN ONLY CAN ACCESS THIS ROUTES */
 Route::group(['middleware' => 'is_super_admin'], function () {
     Route::get('/dashcube',  function () { return view('dashcube'); })->name('dashcube');
-    Route::resource('/users', 'App\Http\Controllers\ConfigController');
+    Route::put('/user/{user}/role', [UserController::class,'update']);
 });
 
 /** ADMIN ONLY CAN ACCESS THIS ROUTES */

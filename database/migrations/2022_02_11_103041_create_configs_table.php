@@ -16,7 +16,7 @@ class CreateConfigsTable extends Migration
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('activated');
+            $table->boolean('activated')->nullable();
             $table->string('value');
             $table->timestamps();
         });

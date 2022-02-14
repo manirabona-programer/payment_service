@@ -38,7 +38,7 @@ class superAdminTest extends TestCase {
 
     /** test super admin can assign new role to any user */
     public function test_super_admin_can_assign_roles(){
-        $response = $this->actingAs($this->super_admin)->put('/users/'.$this->user->id, ["role_id" => Role::ADMIN]);
+        $response = $this->actingAs($this->super_admin)->put('/user/'.$this->user->id.'/role', ["role_id" => Role::ADMIN]);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', ['role_id' => Role::ADMIN]);
     }

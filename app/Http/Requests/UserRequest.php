@@ -13,8 +13,8 @@ class UserRequest extends FormRequest {
     public function rules() {
         return [
             'role_id' =>['numeric','required'],
-            'royalty_points'=>['numeric','required'],
-            'is_member' =>['boolean','required']
+            'royalty_points'=>['numeric'],
+            'is_member' =>['boolean']
         ];
     }
 }

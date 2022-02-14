@@ -13,8 +13,8 @@ class ProductRequest extends FormRequest{
     public function rules() {
         return [
             'name' => ['string', 'required'],
-            'quantity' => ['numeric', 'required'],
-            'price'=> ['required', 'string']
+            'quantity' => ['numeric'],
+            'price'=> ['string']
         ];
     }
 }
