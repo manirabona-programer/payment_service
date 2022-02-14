@@ -18,16 +18,19 @@ class adminTest extends TestCase {
         $this->admin = User::factory()->create(['role_id' => Role::ADMIN]);
     }
 
+    /** test admin can access dashbaord */
     public function test_admin_can_access_dashboard(){
         $response = $this->actingAs($this->admin)->get('/dashboard');
         $response->assertStatus(200);
     }
 
+    /** test admin can not access dashbcube (super admin page) */
     public function test_admin_can_not_access_dashcube(){
         $response = $this->actingAs($this->admin)->get('/dashcube');
         $response->assertStatus(403);
     }
 
+    /** test admin can create and add config */
     public function test_admin_can_add_config(){
         $response = $this->actingAs($this->admin)->post('/config',
             ['name'=>'SHS', 'activated' => true, 'value' => 2]
@@ -36,11 +39,13 @@ class adminTest extends TestCase {
         $this->assertTrue(Config::all()->count() == 1);
     }
 
+    /** test admin can access avaliable configs */
     public function test_admin_can_access_configs(){
         $response = $this->actingAs($this->admin)->get('/config');
         $response->assertStatus(200);
     }
 
+    /** test admin can update any config */
     public function test_admin_can_update_config(){
         $config = Config::factory()->create(['name' => 'BSI', 'activated' => false]);
         $this->assertDatabaseHas('configs', ['name' => 'BSI']);
@@ -50,6 +55,7 @@ class adminTest extends TestCase {
         $this->assertDatabaseHas('configs', ['name' => 'Lock']);
     }
 
+    /** test admin can delete any config */
     public function test_admin_can_delete_config(){
         $config = Config::factory()->create();
         $this->assertTrue(Config::all()->count() == 1);

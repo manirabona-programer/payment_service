@@ -8,10 +8,11 @@ use App\Models\ProductPayment;
 
 class Product extends Model {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'quantity',
-        'price',
-    ];
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = ['name','quantity','price',];
 }

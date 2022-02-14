@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ConfigRequest;
-use App\Models\Config;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ConfigController extends Controller {
+class UserController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $configs = Config::all();
-        return view('config.index', compact('configs'));
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -23,7 +23,7 @@ class ConfigController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('config.create');
+        return view('users.create');
     }
 
     /**
@@ -32,51 +32,48 @@ class ConfigController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConfigRequest $request, Config $config) {
-        $this->authorize('create', $config);
-        Config::create($request->validated());
+    public function store(UserRequest $request, User $user) {
+        $this->authorize('create', $user);
+        User::create($request->validated());
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Config $config) {
-        return view('config.show', compact('config'));
+    public function show(User $user) {
+        return view('users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Config $config
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Config $config) {
-        return view('config.edit', compact('config'));
+    public function edit(User $user) {
+        return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  ConfigRequest $request, Config $config
+     * @param  UserRequest $request, User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(ConfigRequest $request, Config $config) {
-        $this->authorize('update', $config);
-        $config->update($request->validated());
+    public function update(UserRequest $request, User $user) {
+        $this->authorize('update', $user);
+        $user->update($request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Config $config
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Config $config) {
-        $this->authorize('delete', $config);
-        $config->delete();
+    public function destroy($id) {
+        return false;
     }
 }

@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model{
     use HasFactory;
-    
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = ['name'];
 
     public const USER = 1;

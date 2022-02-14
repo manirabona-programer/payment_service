@@ -22,7 +22,7 @@ class UserSeeder extends Seeder {
             'email' => 'michecllbcold@yahoo.com',
             'password' => Hash::make('michecllbcold'),
             'role_id' => Role::SUPER_ADMIN,
-            'royalty_points' => 10,
+            'royalty_points' => 0,
             'is_member' => true,
         ]);
     }

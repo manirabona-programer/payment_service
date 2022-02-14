@@ -16,21 +16,19 @@ class userTest extends TestCase {
         $this->user->roles()->attach(Role::USER);
     }
 
-    public function test_user_can_access_home_page(){
-        $response = $this->actingAs($this->user)->get('/');
-        $response->assertStatus(200);
-    }
-
+    /** test user can access product page */
     public function test_user_can_access_products_page(){
         $response = $this->actingAs($this->user)->get('/products');
         $response->assertStatus(200);
     }
 
+    /** test user can not access dashbaord page (admin page) */
     public function test_user_can_not_access_dashboard(){
         $response = $this->actingAs($this->user)->get('/dashboard');
         $response->assertStatus(403);
     }
 
+    /** test user can not access dashcube page (super admin page) */
     public function test_user_can_not_access_dashcube(){
         $response = $this->actingAs($this->user)->get('/dashcube');
         $response->assertStatus(403);

@@ -19,8 +19,8 @@ class CreateRolesTable extends Migration {
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('role_id')->default(Role::USER)->after('id');
-            $table->integer('royalty_points')->default(0)->after('password');
+            $table->unsignedInteger('role_id')->default(Role::USER)->after('remember_token');
+            $table->integer('royalty_points')->default(0)->after('role_id');
             $table->boolean('is_member')->default(false)->after('royalty_points');
         });
     }

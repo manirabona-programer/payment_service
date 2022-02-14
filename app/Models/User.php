@@ -16,25 +16,14 @@ class User extends Authenticatable{
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id',
-        'royalty_points',
-        'is_member',
-    ];
+    protected $fillable = ['name','email','password','role_id','royalty_points','is_member',];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'role'
-    ];
+    protected $hidden = ['password','remember_token','role'];
 
     /**
      * The attributes that should be cast.
@@ -48,10 +37,6 @@ class User extends Authenticatable{
     /** relatioship between user and role */
     public function role() {
         return $this->belongsTo(Role::class);
-    }
-
-    public function loyalty(){
-        return $this->belongsTo(Loyalty::class);
     }
 
     /** check is user id belong to admin role id */
